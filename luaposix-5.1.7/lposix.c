@@ -1208,6 +1208,7 @@ static int Pgmtime(lua_State *L)		/** gmtime([time]) */
 	return 1;
 }
 
+#if 0 /* Unsupported on iPhone OS ? */
 static int get_clk_id_const(const char *str)
 {
 	if (str == NULL)
@@ -1243,6 +1244,7 @@ static int Pclock_gettime(lua_State *L)		/** clock_gettime([clockid]) */
 	lua_pushnumber(L, res.tv_nsec);
 	return 2;
 }
+#endif
 
 static int Pstrftime(lua_State *L)		/** strftime(format, [time]) */
 {
@@ -1296,8 +1298,10 @@ static const luaL_reg R[] =
 	{"chdir",		Pchdir},
 	{"chmod",		Pchmod},
 	{"chown",		Pchown},
+#if 0
 	{"clock_getres",	Pclock_getres},
 	{"clock_gettime",	Pclock_gettime},
+#endif
 	{"crypt",		Pcrypt},
 	{"ctermid",		Pctermid},
 	{"dirname",		Pdirname},

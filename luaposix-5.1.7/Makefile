@@ -6,6 +6,7 @@ LUAVERSION=	5.1
 LUAINC= 	$(PREFIX)/include
 LUALIB= 	$(PREFIX)/lib/lua/$(LUAVERSION)
 LUABIN= 	$(PREFIX)/bin
+CC=gcc
 
 # other executables
 LUA=		lua
