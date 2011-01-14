@@ -1,0 +1,5 @@
+h1. lua-iphone: Lua distribution for jailbroken iPhones
+
+This repository is aimed to host Lua sources and several useful modules.
+The goal is to compile them all and build APT packages that can be then installed through Cydia.
+
