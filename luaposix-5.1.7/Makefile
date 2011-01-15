@@ -26,7 +26,7 @@ endif
 
 WARN=		-pedantic -Wall
 INCS=		-I$(LUAINC)
-CFLAGS+=	-fPIC $(INCS) $(WARN) -DVERSION=\"$(FULL_VERSION)\"
+CFLAGS+=	-fPIC $(INCS) $(WARN) -DVERSION=\"$(FULL_VERSION)\" -O2
 
 MYNAME=		posix
 MYLIB= 		$(MYNAME)
