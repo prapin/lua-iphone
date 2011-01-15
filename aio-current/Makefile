@@ -1,3 +1,5 @@
+CC=gcc
+LIBEVENT_INCDIR=.
 
 all: src/aio_constants.lua src/event_constants.lua
 

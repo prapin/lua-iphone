@@ -39,6 +39,8 @@
 #define uchar unsigned char
 #endif
 
+#define DARWIN
+
 typedef enum {
   AT_SHORT,
   AT_USHORT,
@@ -285,12 +287,14 @@ static void alien_unload (void *lib) {
 
 static void *alien_load (lua_State *L, const char *path) {
   (void)path;  /* to avoid warnings */
+  printf("alien_load, path = %s\n", path);
   lua_pushliteral(L, DLMSG);
   return NULL;
 }
 
 static void *alien_loadfunc (lua_State *L, void *lib, const char *sym) {
   (void)lib; (void)sym;  /* to avoid warnings */
+  printf("alien_loadfunc, sym = %s\n", sym);
   lua_pushliteral(L, DLMSG);
   return NULL;
 }
