@@ -1,22 +1,21 @@
 
+LIB_OPTION=-bundle -undefined dynamic_lookup
+# change these to reflect your Lua installation
+PREFIX=		/usr/local
+LUAVERSION=	5.1
+LUAINC= 	$(PREFIX)/include
+LUA_LIBDIR= 	$(PREFIX)/lib/lua/$(LUAVERSION)
+LUABIN= 	$(PREFIX)/bin
+LUA_DIR= $(PREFIX)/share/lua/$(LUAVERSION)
+CC=gcc
+
 all: src/alien/core.so src/alien/struct.so tests/libalientest$(LIB_EXT)
 
-src/alien/core.o: src/alien/core.c libffi/include/ffi.h
-	$(CC) -c $(CFLAGS) -Ilibffi/include -o src/alien/core.o src/alien/core.c
-
-libffi/include/ffi.h:
-	cat executables | xargs chmod +x
-	cd libffi && ./configure --disable-shared CC=gcc
-
-libffi/Makefile:
-	cat executables | xargs chmod +x
-	cd libffi && ./configure --disable-shared CC=gcc
-
-libffi/.libs/libffi.a: libffi/Makefile
-	cd libffi && make CC=gcc
-
-src/alien/core.so: src/alien/core.o libffi/.libs/libffi.a
-	export MACOSX_DEPLOYMENT_TARGET=10.3; $(CC) $(LIB_OPTION) -o src/alien/core.so src/alien/core.o -lgcc -Llibffi/.libs -lffi
+src/alien/core.o: src/alien/core.c
+	$(CC) -c $(CFLAGS) -o src/alien/core.o src/alien/core.c
+	
+src/alien/core.so: src/alien/core.o
+	export MACOSX_DEPLOYMENT_TARGET=10.3; $(CC) $(LIB_OPTION) -o src/alien/core.so src/alien/core.o -lgcc -lffi
 
 src/alien/struct.so: src/alien/struct.o 
 	export MACOSX_DEPLOYMENT_TARGET=10.3; $(CC) $(LIB_OPTION) -o src/alien/struct.so src/alien/struct.o
@@ -24,14 +23,14 @@ src/alien/struct.so: src/alien/struct.o
 install: src/alien/core.so src/alien/struct.so
 	mkdir -p $(LUA_LIBDIR)/alien
 	cp src/alien/core.so $(LUA_LIBDIR)/alien
-	mkdir -p $(LUA_LIBDIR)/alien
+	#mkdir -p $(LUA_LIBDIR)/alien
 	cp src/alien/struct.so $(LUA_LIBDIR)/alien
 	cp src/alien.lua $(LUA_DIR)/
-	chmod +x src/constants
-	cp src/constants $(BIN_DIR)/
-	cp -r tests $(PREFIX)/
-	cp -r samples $(PREFIX)/
-	cp -r doc $(PREFIX)/
+	#chmod +x src/constants
+	#cp src/constants $(BIN_DIR)/
+	#cp -r tests $(PREFIX)/
+	#cp -r samples $(PREFIX)/
+	#cp -r doc $(PREFIX)/
 
 clean:
 	find . -name "*.so" -o -name "*.o" -o -name "*.dylib" | xargs rm -f
