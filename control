@@ -5,6 +5,6 @@ Provides: lua51
 Priority: standard
 Depends: libffi
 Architecture: iphoneos-arm
-Section: System
+Section: Script
 Author: Patrick Rapin <toupie300@gmail.com>
 Description: Lua distribution for iPhone
