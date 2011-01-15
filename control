@@ -1,0 +1,10 @@
+Package: lua51
+Name: Lua 5.1
+Version: 5.1.4-1
+Provides: lua51
+Priority: standard
+Depends: libffi
+Architecture: iphoneos-arm
+Section: System
+Author: Patrick Rapin <toupie300@gmail.com>
+Description: Lua distribution for iPhone

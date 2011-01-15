@@ -1,6 +1,8 @@
 #!/bin/bash
-DISTRIB_ROOT=$PWD/distrib/root/usr
+DISTRIB_ROOT=$PWD/distrib/usr
 LUA_LIB=$DISTRIB_ROOT/share/lua/5.1
+mkdir -p $DISTRIB_ROOT/../DEBIAN
+cp control $DISTRIB_ROOT/../DEBIAN
 cd lua-5.1.4/
 make
 mkdir -p $DISTRIB_ROOT/bin
@@ -32,4 +34,4 @@ cd ../cgilua-5.1.3
 mkdir -p $LUA_LIB/cgilua
 cp src/cgilua/cgilua.lua $LUA_LIB
 cp src/cgilua/authentication.lua src/cgilua/cookies.lua src/cgilua/dispatcher.lua src/cgilua/loader.lua src/cgilua/lp.lua src/cgilua/mime.lua src/cgilua/post.lua src/cgilua/readuntil.lua src/cgilua/serialize.lua src/cgilua/session.lua src/cgilua/urlcode.lua $LUA_LIB/cgilua
-
+dpkg-deb -b distrib lua-5.1.4-1.deb
