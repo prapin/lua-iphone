@@ -1,7 +1,7 @@
-require "luarocks.require"
+--require "luarocks.require"
 require "alien"
 
-local glib = alien.load("/usr/lib/libglib-2.0.so.0")
+local glib = alien.load("/usr/lib/libglib-2.0.dylib")
 local v,p,i,s = "void","pointer","int","string"
 
 glib.g_strsplit:types(p,s,s,i) -- string to array

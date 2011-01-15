@@ -7,6 +7,7 @@ LUAINC= 	$(PREFIX)/include
 LUA_LIBDIR= 	$(PREFIX)/lib/lua/$(LUAVERSION)
 LUABIN= 	$(PREFIX)/bin
 LUA_DIR= $(PREFIX)/share/lua/$(LUAVERSION)
+LIB_EXT=.dylib
 CC=gcc
 
 all: src/alien/core.so src/alien/struct.so tests/libalientest$(LIB_EXT)
@@ -45,7 +46,7 @@ upload-dist:
 	ncftpput -u mascarenhas ftp.luaforge.net alien/htdocs doc/index.html
 
 tests/libalientest$(LIB_EXT): tests/alientest.c
-	$(CC) $(LIB_OPTION) $(CFLAGS) -o tests/libalientest$(LIB_EXT) tests/alientest.c
+	$(CC) -shared $(CFLAGS) -o tests/libalientest$(LIB_EXT) tests/alientest.c
 
 test:
 	cd tests && lua -l luarocks.require test_alien.lua
