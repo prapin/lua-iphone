@@ -23,3 +23,13 @@ mkdir -p $LUA_LIB/mime
 cp src/http.lua src/url.lua src/tp.lua src/ftp.lua src/smtp.lua src/socket.so $LUA_LIB/socket
 cp src/ltn12.lua src/socket.lua src/mime.lua   $LUA_LIB
 cp src/mime.so  $LUA_LIB/mime
+cd ../alien-5.0
+make
+mkdir -p $LUA_LIB/alien
+cp src/alien/core.so src/alien/struct.so $LUA_LIB/alien
+cp src/alien.lua $LUA_LIB
+cd ../cgilua-5.1.3
+mkdir -p $LUA_LIB/cgilua
+cp src/cgilua/cgilua.lua $LUA_LIB
+cp src/cgilua/authentication.lua src/cgilua/cookies.lua src/cgilua/dispatcher.lua src/cgilua/loader.lua src/cgilua/lp.lua src/cgilua/mime.lua src/cgilua/post.lua src/cgilua/readuntil.lua src/cgilua/serialize.lua src/cgilua/session.lua src/cgilua/urlcode.lua $LUA_LIB/cgilua
+
