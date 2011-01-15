@@ -1,10 +1,13 @@
-Package: lua51
+Package: org.lua.lua51
 Name: Lua 5.1
 Version: 5.1.4-1
-Provides: lua51
-Priority: standard
+Priority: optional
 Depends: libffi
+Installed-Size: 692
 Architecture: iphoneos-arm
-Section: Script
-Author: Patrick Rapin <toupie300@gmail.com>
-Description: Lua distribution for iPhone
+Section: Scripts
+Website: http://prapin.github.com/lua-iphone/
+Author: Lua.org
+Maintainer: Patrick Rapin <toupie300@gmail.com>
+Description: Lua is a powerful, fast, lightweight, embeddable scripting language. Lua combines simple procedural syntax with powerful data description constructs based on associative arrays and extensible semantics. This distribution also includes several useful libraries.
+ 
