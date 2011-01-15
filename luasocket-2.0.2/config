@@ -8,8 +8,8 @@
 EXT=so
 SOCKET_V=2.0.2
 MIME_V=1.0.2
-SOCKET_SO=socket.$(EXT).$(SOCKET_V) 
-MIME_SO=mime.$(EXT).$(MIME_V)
+SOCKET_SO=socket.$(EXT)
+MIME_SO=mime.$(EXT)
 UNIX_SO=unix.$(EXT)
 
 #------
