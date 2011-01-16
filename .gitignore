@@ -2,3 +2,4 @@
 *.so
 /distrib
 lua-5.1.4-1.deb
+*~
