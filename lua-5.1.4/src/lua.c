@@ -284,6 +284,7 @@ static char **lua_rl_complete(const char *text, int start, int end)
   size_t i, n, dot, loop;
   int savetop;
 
+  rl_completion_append_character = 0;
   if (!(text[0] == '\0' || isalpha(text[0]) || text[0] == '_')) return NULL;
 
   ml.list = NULL;
