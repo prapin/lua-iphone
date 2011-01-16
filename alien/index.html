@@ -2,11 +2,23 @@
 
 <h2>Status</h2>
 
-<p>This is Alien version 0.4.1.</p>
+<p>This is Alien version 0.5.0.</p>
 
 <h2>Changelog</h2>
 
 <ul>
+<li>0.5.0
+<ul>
+<li>new functions alien.memcpy and alien.memset</li>
+<li>new type "p" for alien.struct.pack and unpack, to pack pointers</li>
+<li>new alien.struct.offset function to get the offset of a given record</li>
+<li>buf:tostring now has optional "offset" argument</li>
+<li>buf:topointer now has optional "offset" argument</li>
+<li>added unsigned numbers: uint, ulong, ushort, and "ref uint"</li>
+<li>basic support for declarative strucutures</li>
+<li>unified treatment of funcitons and callbacks in the source</li>
+<li>fixed segfault when collecting 0-arg functions</li>
+</ul></li>
 <li>0.4.1
 <ul>
 <li>fixes bug where Alien was always using cdecl abi for Windows (except in callbacks)</li>
@@ -51,9 +63,7 @@ binary uses MSVCR80.DLL for compatibility with LuaBinaries.</p>
 <h2>Installing Alien</h2>
 
 <p>The best way to install Alien is through
-<a href="http://luarocks.org">LuaRocks</a>. Just add <a href="http://www.lua.inf.puc-rio.br/~mascarenhas/rocks">this
-repository</a> to your
-LuaRocks configuration, then do <code>luarocks install alien</code>. You may need
+<a href="http://luarocks.org">LuaRocks</a>. Just do <code>luarocks install alien</code>. You may need
 root permissions to do this, depending on your LuaRocks configuration.</p>
 
 <p>Go to the Alien rock directory to see local copies of this
@@ -100,9 +110,9 @@ alien function puts, library defaults
 
 <p>To use a function you first have to tell Alien the function prototype,
 using <em>func:types(ret_type, arg_types...)</em>, where the types are one of
-the following strings: "void", "int", "double", "char", "string",
-"pointer", "ref int", "ref double", "ref char", "callback", "short",
-"byte", "long", and "float". Most correspond directly to C types;
+the following strings: "void", "int", "uint", "double", "char", "string",
+"pointer", "ref int", "ref uint", "ref double", "ref char", "callback", "short", "ushort",
+"byte", "long", "ulong", and "float". Most correspond directly to C types;
 <em>byte</em> is a signed char, <em>string</em> is <em>const char*</em>, <em>pointer</em> is <em>void*</em>,
 <em>callback</em> is a generic function pointer, and <em>ref char</em>, <em>ref int</em>
 and <em>ref double</em> are by reference versions of the C types. Continuing
@@ -248,6 +258,38 @@ for i, v in nums:ipairs() do print(v) end
 
 <p>This prints numbers one to six on the console.</p>
 
+<h2>Structs</h2>
+
+<p>Alien also has basic support for declarative structs that is also implemented as a layer of sugar
+on the basic buffers. The <code>alien.defstruct(description)</code> function creates a struct type with the
+given description, which is a list of pairs with the name and type of each field, where the type is any
+basic alien type (no structs inside structs yet). For example:</p>
+
+<pre><code>rect = alien.defstruct{
+  { "left", "long" },
+  { "top", "long" },
+  { "right", "long" },
+  { "bottom", "long" }
+}
+</code></pre>
+
+<p>This creates a new struct type with four fields of type "long", and stores it in <code>rect</code>. To create an
+instance of this structure (backed by a buffer) call <code>rect:new()</code>. You can then set the fields of the
+struct just like you do on a Lua table, like <code>r.left = 3</code>. To get the underlying buffer (to pass it
+to a C function, for example) you have to call the instance, <code>r()</code>. Continuing the example:</p>
+
+<pre><code>r = rect:new()
+r.left = 2
+doubleleft = alien.rectdll.double_left
+doubleleft:types("void", "pointer")
+doubleleft(r()))
+assert(r.left == 4)
+</code></pre>
+
+<p>You can also pass a buffer or other userdata to the <code>new</code> method of your struct type, and in this case this will
+be the backing store of the struct instance you are creating. This is useful for unpacking a foreign struct that
+a C function returned.</p>
+
 <h2>Pointer Unpacking</h2>
 
 <p>Alien also provides three convenience functions that let you
@@ -263,7 +305,7 @@ dereferences it and returns it as a number. If you pass it a number
 it assumes the userdata is an array with this number of elements.</li>
 <li><code>alien.toshort</code>, <code>alien.tolong</code>, <code>alien.tofloat</code>, and
 <code>alien.todouble</code> are like <code>alien.toint</code>, but works with
-with the respective typecasts.</li>
+with the respective typecasts. Unsigned versions are also available.</li>
 </ul>
 
 <p>The numeric alien.to<em>type</em> functions take an optional second argument that
@@ -367,8 +409,8 @@ assert(chars:tostring() == "   ,,aaaadmmmnpppsss")
 <p>The <em>qsort</em> function sorts an array in-place, so we have to use a
 buffer.</p>
 
-<p>Callbacks are callable from Lua just like any other Alien function, although
-you can't change their types.</p>
+<p>Callbacks are callable from Lua just like any other Alien function, and you can freely
+change their types with their "types" method.</p>
 
 <h2>Magic Numbers</h2>
 
@@ -468,7 +510,7 @@ name is stolen from Common Lisp FFIs.</p>
 
 <p>Alien's uses the MIT license, reproduced below:</p>
 
-<p>Copyright (c) 2008 Fabio Mascarenhas</p>
+<p>Copyright (c) 2008-2009 Fabio Mascarenhas</p>
 
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
