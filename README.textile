@@ -3,3 +3,6 @@ h1. lua-iphone: Lua distribution for jailbroken iPhones
 This repository is aimed to host Lua sources and several useful modules.
 The goal is to compile them all and build APT packages that can be then installed through Cydia.
 
+To build the Debian package with the current environment, you need a complete working toolchain ON the iPhone or iPad.
+Because I am not a Makefile guru, there is a simple build.sh script in the root directory that runs all the makefiles 
+in order and then construct the .deb file.
